@@ -1,4 +1,4 @@
-<!----- Conversion time: 2.302 seconds.
+<!----- Conversion time: 1.445 seconds.
 
 
 Using this HTML file:
@@ -11,14 +11,17 @@ Using this HTML file:
 Conversion notes:
 
 * Docs to Markdown version 1.0β17
-* Mon Jan 20 2020 22:16:36 GMT-0800 (PST)
+* Mon Jan 20 2020 22:29:53 GMT-0800 (PST)
 * Source doc: https://docs.google.com/open?id=1jPqP9Ck9-ZqTtZQ5cO8qNNSLcd4ldjoyjf7am5EBzEc
-* This is a partial selection. Check to make sure intra-doc links work.
+
+WARNING:
+H6 not demoted to H7. Look for "H6 not demoted to H7." inline.
+
 * This document has images: check for >>>>>  gd2md-html alert:  inline image link in generated source and store images to your server.
 ----->
 
 
-<p style="color: red; font-weight: bold">>>>>>  gd2md-html alert:  ERRORs: 0; WARNINGs: 0; ALERTS: 2.</p>
+<p style="color: red; font-weight: bold">>>>>>  gd2md-html alert:  ERRORs: 0; WARNINGs: 1; ALERTS: 2.</p>
 <ul style="color: red; font-weight: bold"><li>See top comment block for details on ERRORs and WARNINGs. <li>In the converted Markdown or HTML, search for inline alerts that start with >>>>>  gd2md-html alert:  for specific instances that need correction.</ul>
 
 <p style="color: red; font-weight: bold">Links to alert messages:</p><a href="#gdcalert1">alert1</a>
@@ -27,10 +30,10 @@ Conversion notes:
 <p style="color: red; font-weight: bold">>>>>> PLEASE check and correct alert issues and delete this message and the inline alerts.<hr></p>
 
 
-<h3>12장 다층 퍼셉트론</h3>
+<h4>12장 다층 퍼셉트론</h4>
 
 
-<h3>15장 CNN  이미지 분류</h3>
+<h4>14장 CNN  이미지 분류</h4>
 
 
 <p>
@@ -40,9 +43,11 @@ Multilayer Perceptron (MLP)
 -입력층, 은익층, 출력층,
 </p>
 <p>
-           <a href="https://github.com/rickiepark/python-machine-learning-book-2nd-edition">https://github.com/rickiepark/python-machine-learning-book-2nd-edition</a>
+ <a href="https://github.com/rickiepark/python-machine-learning-book-2nd-edition">https://github.com/rickiepark/python-machine-learning-book-2nd-edition</a>
 </p>
-<h6>tensorflow 1.0 기본</h6>
+<!--H6 not demoted to H7. -->
+
+<h6>tensorflow 1.0 기본</h7>
 
 
 <ol>
@@ -66,9 +71,7 @@ Multilayer Perceptron (MLP)
 <li>sess.run (  feed_dict={x:t})(
 </li> 
 </ol>
-
-<li>
-</li>
+</li> 
 </ol>
 <p>
 	
@@ -92,7 +95,9 @@ with tf.compat.v1.Session(graph=g) as sess:
                t,sess.run(z,feed_dict={x:t})))</pre>
 
 
-<h6>tensorflow 2.0 기본</h6>
+<!--H6 not demoted to H7. -->
+
+<h6>tensorflow 2.0 기본</h7>
 
 
 
@@ -118,9 +123,9 @@ tf.keras가 tensorflow 2.0에서는 표준 파이썬 API
 <p>
 <a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a>
 </p>
-<p>
-minst 예제 
-</p>
+<h4>minst 예제 </h4>
+
+
 <ul>
 
 <li>표준화 
@@ -218,7 +223,7 @@ model.compile(optimizer=sgd_optimizer,loss='categorical_crossentropy')</pre>
 <p>
 glorot_uniform
 </p>
-<h3>텐서 </h3>
+<h4>텐서 </h4>
 
 
 <ul>
@@ -306,7 +311,7 @@ w2.assign(w2+1)</pre>
 </ul>
 </li> 
 </ul>
-<h5>모델만드는 법 </h5>
+<h6>모델만드는 법 </h6>
 
 
 <ul>
@@ -457,7 +462,7 @@ history= model.fit(x_train,y_train,epochs=500,
 <img src="images/-0.png" width="" alt="alt_text" title="image_tooltip">
 
 </p>
-<h5>텐서 보드 실행 </h5>
+<h6>텐서 보드 실행 </h6>
 
 
 <ul>
@@ -500,7 +505,7 @@ Reusing TensorBoard on port 6006 (pid 77859), started 0:00:23 ago. (Use '!kill 7
 <p>
 show_shapes=True 입력,출력 크기도 함께 나타내줌
 </p>
-<h3>15장 심증합성곱으로 신경망으로 이미지 분류 </h3>
+<h4>15장 심층합성곱으로 신경망으로 이미지 분류 </h4>
 
 
 <ul>
@@ -641,13 +646,9 @@ history = model.fit(X_train_centered,y_train_onehot,
 <li>Tensorboard callback  
 </li> 
 </ul>
-
-<li>
-</li>
+</li> 
 </ul>
 <h6>loss 함수 시각화</h6>
-
-
 
 
 
@@ -670,6 +671,5 @@ plt.show()</pre>
 </pre>
 
 
-<h5>feature map, filter 시각화</h5>
-
+<h6>feature map, filter 시각화</h6>
 

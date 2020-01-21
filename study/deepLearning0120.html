@@ -1,25 +1,3 @@
-<!----- Conversion time: 1.445 seconds.
-
-
-Using this HTML file:
-
-1. Cut and paste this output into your source file.
-2. See the notes and action items below regarding this conversion run.
-3. Check the rendered output (headings, lists, code blocks, tables) for proper
-   formatting and use a linkchecker before you publish this page.
-
-Conversion notes:
-
-* Docs to Markdown version 1.0β17
-* Mon Jan 20 2020 22:29:53 GMT-0800 (PST)
-* Source doc: https://docs.google.com/open?id=1jPqP9Ck9-ZqTtZQ5cO8qNNSLcd4ldjoyjf7am5EBzEc
-
-WARNING:
-H6 not demoted to H7. Look for "H6 not demoted to H7." inline.
-
-* This document has images: check for >>>>>  gd2md-html alert:  inline image link in generated source and store images to your server.
------>
-
 <h4>12장 다층 퍼셉트론</h4>
 
 <h4>14장 CNN  이미지 분류</h4>
@@ -65,22 +43,27 @@ Multilayer Perceptron (MLP)
 	
 </p>
 
+<code>
 
+   <pre class="prettyprint">
+      g = tf.Graph()
+      with g.as_default():
+         x= tf.compat.v1.placeholder(dtype= tf.float32, shape=(None),name='x')
+         w = tf.Variable(2.0,name='weight')
+         b = tf.Variable(0.7,name='bias')
+      
+         z = w * x + b
+         init = tf.compat.v1.global_variables_initializer()
+      
+      with tf.compat.v1.Session(graph=g) as sess:
+         sess.run(init)
+         for t in [1.0,0.6,-1.8]:
+                 print('x=%4.1f -> %4.1f'%(
+                     t,sess.run(z,feed_dict={x:t})))</pre>
+      
 
-<pre class="prettyprint">g = tf.Graph()
-with g.as_default():
-   x= tf.compat.v1.placeholder(dtype= tf.float32, shape=(None),name='x')
-   w = tf.Variable(2.0,name='weight')
-   b = tf.Variable(0.7,name='bias')
+</code>
 
-   z = w * x + b
-   init = tf.compat.v1.global_variables_initializer()
-
-with tf.compat.v1.Session(graph=g) as sess:
-   sess.run(init)
-   for t in [1.0,0.6,-1.8]:
-           print('x=%4.1f -> %4.1f'%(
-               t,sess.run(z,feed_dict={x:t})))</pre>
 
 
 <!--H6 not demoted to H7. -->
@@ -89,20 +72,22 @@ with tf.compat.v1.Session(graph=g) as sess:
 
 
 
+<code>
+   <pre class="prettyprint">#tensor flow 2.0
+      w = tf.Variable(2.0,name='weight')
+      b = tf.Variable(0.7,name='bias')
+      
+      for x in [1.0,0.6,-1.8]:
+         z = w * x + b
+         print('x=%4.1f -> %4.1f'%(x,z))
+      print(z)
+      
+      # tensor flow 2.0  for 문 제거
+      z = w * [1.0,0.6,-1.8] + b
+      print(z.numpy())</pre>
+      
+</code>
 
-
-<pre class="prettyprint">#tensor flow 2.0
-w = tf.Variable(2.0,name='weight')
-b = tf.Variable(0.7,name='bias')
-
-for x in [1.0,0.6,-1.8]:
-   z = w * x + b
-   print('x=%4.1f -> %4.1f'%(x,z))
-print(z)
-
-# tensor flow 2.0  for 문 제거
-z = w * [1.0,0.6,-1.8] + b
-print(z.numpy())</pre>
 
 
 <p>
@@ -299,14 +284,11 @@ w2.assign(w2+1)</pre>
 </ul>
 </li> 
 </ul>
-<h6>모델만드는 법 </h6>
-
+<h4>모델만드는 법 </h4>
 
 <ul>
-
 <li>방법1)
-
-    
+   
 
 <pre class="prettyprint">from tensorflow.keras import Model,Input
 model = tf.keras.Sequential()
@@ -443,15 +425,8 @@ history= model.fit(x_train,y_train,epochs=500,
 </p>
 <p>
 
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/-0.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-<img src="images/-0.png" width="" alt="alt_text" title="image_tooltip">
-
 </p>
-<h6>텐서 보드 실행 </h6>
-
+<h5>텐서 보드 실행 </h5>
 
 <ul>
 
@@ -572,39 +547,42 @@ show_shapes=True 입력,출력 크기도 함께 나타내줌
 
 <li>keras.API로 CNN구성
 
-    
+   <code>
+      <pre class="prettyprint">from tensorflow.keras import layers,models
+         model = models.Sequential()
+         model.add(layers.Conv2D(32,(5,5),padding='valid',activation='relu', input_shape=(28,28,1)))
+         #32 필터의 갯수   (5,5) 필터의 크기
+         #padding = valid 기본값 :  same 구성요소
+         #stride: 정수 두개로 이루어진 튜블
+         #kernel_initializer : 세이비어 초기화 방식 (글로럿) : glorot_uniform
+         model.add(layers.MaxPool2D((2,2)))
+         # 두번째 합성곱 층
+         model.add(layers.Conv2D(64,(5,5),padding='valid',activation='relu'))
+         model.add(layers.MaxPool2D((2,2)))
+         model.add(layers.Flatten())
+         # 1개 이상의 완전 연결층으로 연결됨
+         model.add(layers.Dense(1024, activation='relu'))  # 기본값 kernel_initialize: gloror_uniform  bias_init: zeros
+         model.add(layers.Dropout(0.5))  # 유닛을 끌 확률 매개변수
+         model.add(layers.Dense(10,activation='softmax'))
+         model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['acc'])
+         import time
+         from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
+         callback_list = [ModelCheckpoint(filepath='cnn_checkpoint.h5', monitor='val_loss',save_best_only=True),
+                                        TensorBoard(log_dir="logs/{}".format(time.asctime()))]
+         v_epoch = 50                               
+         <ul>
+         history = model.fit(X_train_centered,y_train_onehot,
+                            batch_size=64, epochs=v_epoch,
+                            validation_data=(X_valid_centered,y_valid_onehot),
+                            callbacks= callback_list)</pre>
+         
+         
+         </li>
+         </ul>
 
-<pre class="prettyprint">from tensorflow.keras import layers,models
-model = models.Sequential()
-model.add(layers.Conv2D(32,(5,5),padding='valid',activation='relu', input_shape=(28,28,1)))
-#32 필터의 갯수   (5,5) 필터의 크기
-#padding = valid 기본값 :  same 구성요소
-#stride: 정수 두개로 이루어진 튜블
-#kernel_initializer : 세이비어 초기화 방식 (글로럿) : glorot_uniform
-model.add(layers.MaxPool2D((2,2)))
-# 두번째 합성곱 층
-model.add(layers.Conv2D(64,(5,5),padding='valid',activation='relu'))
-model.add(layers.MaxPool2D((2,2)))
-model.add(layers.Flatten())
-# 1개 이상의 완전 연결층으로 연결됨
-model.add(layers.Dense(1024, activation='relu'))  # 기본값 kernel_initialize: gloror_uniform  bias_init: zeros
-model.add(layers.Dropout(0.5))  # 유닛을 끌 확률 매개변수
-model.add(layers.Dense(10,activation='softmax'))
-model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['acc'])
-import time
-from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
-callback_list = [ModelCheckpoint(filepath='cnn_checkpoint.h5', monitor='val_loss',save_best_only=True),
-                               TensorBoard(log_dir="logs/{}".format(time.asctime()))]
-v_epoch = 50                               
-history = model.fit(X_train_centered,y_train_onehot,
-                   batch_size=64, epochs=v_epoch,
-                   validation_data=(X_valid_centered,y_valid_onehot),
-                   callbacks= callback_list)</pre>
+   </code>
 
 
-</li>
-</ul>
-<ul>
 
 <li>Conv2D(32,(5,5),padding, activation. input_shape..)
 
@@ -636,7 +614,7 @@ history = model.fit(X_train_centered,y_train_onehot,
 </ul>
 </li> 
 </ul>
-<h6>loss 함수 시각화</h6>
+<h5>loss 함수 시각화</h5>
 
 
 
@@ -649,7 +627,7 @@ plt.ylabel('loss')
 plt.show()</pre>
 
 
-<h6>정확도 시각화</h6>
+<h5>정확도 시각화</h5>
 
 
 
@@ -659,5 +637,5 @@ plt.show()</pre>
 </pre>
 
 
-<h6>feature map, filter 시각화</h6>
+<h5>feature map, filter 시각화</h5>
 
